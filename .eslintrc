@@ -53,7 +53,7 @@
     "arrow-body-style": ["warn", "as-needed"],
     "arrow-parens": ["error", "always"],
     "arrow-spacing": ["error"],
-    "no-var": ["error"],
+    "no-var": ["warn"],
     "object-shorthand": ["error"],
     "prefer-const": ["warn"],
     "prefer-template": ["error"]
