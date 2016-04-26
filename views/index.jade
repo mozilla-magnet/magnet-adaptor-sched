@@ -1,5 +1,9 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1 #{data.venue}
+  p Redirecting to #{schedUrl}
+  - if (oembed)
+    a(href=oembed) Check oembed
+  script.
+    setTimeout(function() {document.location.href="#{schedUrl}"}, 5000000);

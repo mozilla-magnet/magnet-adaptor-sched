@@ -3,5 +3,7 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    - if (oembed)
+      link(re='alternate', type='application/json+oembed', href=oembed)
   body
     block content
