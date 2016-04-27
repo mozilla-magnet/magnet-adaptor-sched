@@ -1,8 +1,9 @@
 extends layout
 
 block content
-  h1 #{venue}
-  h2 #{date}
+  h1 #{title}
+  h2 #{venue}
+  h3 #{date}
   ul
     each item in events
-      li #{item.time} - #{item.title}
+      li: #[a(href="#{item.link}") #{item.time} - #{item.title}]
