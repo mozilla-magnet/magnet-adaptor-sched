@@ -13,7 +13,7 @@ function redirectNoSchedUrl(req, res) {
 
 router.get('/', (req, res) => {
   debug(req.query);
-  var schedUrl = req.query.schedUrl;
+  var schedUrl = req.query.url;
   if (!schedUrl) {
     redirectNoSchedUrl(req, res);
   } else {
