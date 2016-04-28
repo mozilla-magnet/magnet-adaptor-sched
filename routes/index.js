@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
   parser.parse()
     .then((data) => {
       const transformed = encodeURIComponent(JSON.stringify(data));
-      const oembed = `oembed/?data=${transformed}`;
+      const oembed = `oembed?data=${transformed}`;
       res.render('index', {
         data,
         schedUrl,
@@ -33,7 +33,7 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/oembed/', (req, res) => {
+router.get('/oembed', (req, res) => {
   debug('Trying to get oembed data for ', req.query);
 
   var data = req.query.data;
