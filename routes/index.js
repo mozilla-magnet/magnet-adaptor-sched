@@ -20,10 +20,13 @@ router.get('/', (req, res) => {
     .then((data) => {
       const transformed = encodeURIComponent(JSON.stringify(data));
       const oembed = `oembed?data=${transformed}`;
+      const embed = `embed?data=${transformed}`;
+
       res.render('index', {
         data,
         schedUrl,
-        oembed
+        oembed,
+        embed
       });
     })
 
@@ -33,7 +36,18 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/oembed', (req, res) => {
+router.get('/oembed', (req, res, next) => {
+  var data = req.query.data;
+  if (!data) next(new Error('missing `data=` query parameter'))
+
+  res.json({
+    width: 300,
+    height: 300,
+    html: `<iframe src="embed?data=${data}">`
+  });
+});
+
+router.get('/embed', (req, res) => {
   debug('Trying to get oembed data for ', req.query);
 
   var data = req.query.data;
@@ -46,7 +60,7 @@ router.get('/oembed', (req, res) => {
   }
 
   debug('got data ', data);
-  res.render('oembed', data);
+  res.render('embed', data);
 });
 
 function redirectNoSchedUrl(req, res) {
