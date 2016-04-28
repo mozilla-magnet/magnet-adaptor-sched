@@ -38,12 +38,15 @@ router.get('/', (req, res) => {
 
 router.get('/oembed', (req, res, next) => {
   var data = req.query.data;
-  if (!data) next(new Error('missing `data=` query parameter'))
+  if (!data) next(new Error('missing `data=` query parameter'));
+
+  // express seems to decode query params automatically
+  var encoded = encodeURIComponent(data);
 
   res.json({
     width: 300,
     height: 300,
-    html: `<iframe src="embed?data=${data}">`
+    html: `<iframe src="https://tengam.org/adaptors/sched/embed?data=${encoded}">`
   });
 });
 
