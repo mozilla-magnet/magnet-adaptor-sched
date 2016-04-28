@@ -4,8 +4,8 @@
  * Module dependencies.
  */
 
-const app = require('../app');
 const debug = require('debug')('magnet-adaptor-sched:server');
+const app = require('../app');
 const http = require('http');
 
 /**
