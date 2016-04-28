@@ -4,7 +4,7 @@
  */
 
 const debug = require('debug')('magnet-adaptor-sched:router');
-const sched = require('../lib/sched.js');
+const sched = require('../lib/sched');
 const express = require('express');
 const router = express.Router();
 
