@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
   var schedUrl = req.query.url;
   if (!schedUrl) return redirectNoSchedUrl(req, res);
 
-  schedUrl = schedUrl.replace(/ /g, '+');
+  schedUrl = decodeURIComponent(schedUrl.replace(/ /g, '+'));
   const parser = new sched.Venue(schedUrl);
 
   parser.parse()
