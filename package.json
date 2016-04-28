@@ -18,7 +18,7 @@
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0",
     "superagent": "^1.8.3",
-    "superagent-no-cache": "git@github.com:arcturus/superagent-no-cache.git"
+    "superagent-no-cache": "github:arcturus/superagent-no-cache"
   },
   "devDependencies": {
     "minimist": "^1.2.0"
