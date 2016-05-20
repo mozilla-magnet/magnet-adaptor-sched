@@ -2,9 +2,12 @@ extends layout
 
 block content
   div.magnet-tile
-    img.magnet-tile-icon(src="#{icon}")
-    h1.magnet-tile-title #{title}
-    h2.magnet-tile-subtitle #{venue} - #{date}
+    div.magnet-tile-row-1
+      div.magnet-tile-icon
+        div.inner
+          img(src="#{icon}")
+      h1.magnet-tile-title #{venue} schedule
+    h2.magnet-tile-subtitle #{title} - #{date}
     ul.magnet-tile-list
       each item in events
         li #[a(href="#{item.link}") #[em #{item.time}] #{item.title}]
