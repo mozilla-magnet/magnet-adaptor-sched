@@ -12,7 +12,7 @@ if(!argv['url']) {
 const url = argv['url'];
 const sched = require('../lib/sched.js');
 
-const parser = new sched.venue(url);
+const parser = new sched.Venue(url);
 
 parser.parse()
   .then((info) => {
