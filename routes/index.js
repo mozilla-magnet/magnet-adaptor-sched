@@ -59,7 +59,7 @@ router.get('/oembed', (req, res, next) => {
   res.json({
     width: 300,
     height: 300,
-    html: `<iframe src="http://${BASE_URL}embed?data=${encoded}">`
+    html: `<iframe src="${BASE_URL}embed?data=${encoded}">`
   });
 });
 
