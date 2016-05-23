@@ -8,10 +8,25 @@ const sched = require('../lib/sched');
 const express = require('express');
 const router = express.Router();
 
+/**
+ * The base-url of the embed. Can be
+ * configured when not hosted on usual
+ * tengam.org production server.
+ *
+ * @type {String}
+ */
+const BASE_URL = process.env.BASE_URL || 'https://tengam.org/adaptors/sched/'
+
 router.get('/', (req, res) => {
-  debug(req.query);
   var schedUrl = req.query.url;
+  debug('sched url', schedUrl);
   if (!schedUrl) return redirectNoSchedUrl(req, res);
+
+  // we don't know how the client has encoded
+  // the `url` param, so we decode it completely
+  // and re-encode to ensure it's normalized.
+  schedUrl = encodeURI(decodeURIComponent(schedUrl));
+
   const parser = new sched.Venue(schedUrl);
 
   parser.parse()
@@ -29,7 +44,7 @@ router.get('/', (req, res) => {
     })
 
     .catch((err) => {
-      debug('Error parsing ', err);
+      debug('Error parsing ', err.stack);
       redirectNoSchedUrl(req, res);
     });
 });
@@ -44,7 +59,7 @@ router.get('/oembed', (req, res, next) => {
   res.json({
     width: 300,
     height: 300,
-    html: `<iframe src="https://tengam.org/adaptors/sched/embed?data=${encoded}">`
+    html: `<iframe src="http://${BASE_URL}embed?data=${encoded}">`
   });
 });
 
