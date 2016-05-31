@@ -15,7 +15,7 @@ const router = express.Router();
  *
  * @type {String}
  */
-const BASE_URL = process.env.BASE_URL || 'https://tengam.org/adaptors/sched/'
+const BASE_URL = process.env.BASE_URL || 'https://tengam.org/adaptors/sched/';
 
 router.get('/', (req, res) => {
   var schedUrl = req.query.url;
