@@ -1,12 +1,6 @@
 {
   "name": "magnet-adaptor-sched",
   "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "start": "node ./bin/www",
-    "lint": "./node_modules/eslint/bin/eslint.js routes/** bin/** lib/** public/javascripts/**",
-    "start_debug": "DEBUG=magnet-adaptor-sched:* npm start"
-  },
   "dependencies": {
     "body-parser": "~1.13.2",
     "cheerio": "^0.20.0",
@@ -22,5 +16,11 @@
   },
   "devDependencies": {
     "minimist": "^1.2.0"
+  },
+  "private": true,
+  "scripts": {
+    "lint": "eslint .",
+    "start": "node ./bin/www",
+    "start_debug": "DEBUG=magnet-adaptor-sched:* npm start"
   }
 }
