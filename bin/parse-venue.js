@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 const argv = require('minimist')(process.argv.slice(2));
+const pretty = require('prettyjson');
 
 const usage = 'Use: parseSchedVenue --url=<url>';
 
@@ -17,7 +18,7 @@ const parser = new sched.Venue(url);
 parser.parse()
   .then((info) => {
     console.log('Information parsed:'); // eslint-disable-line no-console
-    console.log(info); // eslint-disable-line no-console
+    console.log(pretty.render(info)); // eslint-disable-line no-console
     process.exit(0);
   })
   .catch((err) => {
