@@ -20,7 +20,7 @@ block content
         console.log('We have a event pending');
         console.log(event);
         var sessions = event.sessions;
-        document.querySelector('.magnet-tile-subtitle').textContent += ' ' + event.date;
+        document.querySelector('.magnet-tile-subtitle').textContent += ' ' + formatTime(event.date);
         var now = Date.now();
         var index = sessions.findIndex(function(s) {
           var d = new Date(s.time);
@@ -78,6 +78,14 @@ block content
           li.appendChild(a);
           list.appendChild(li);
         });
+      }
+
+      function formatTime(string) {
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const components = string.split('-');
+        const month = months[parseInt(components[1], 10) -1];
+        const day = components[2];
+        return day + " " + month;
       }
     });
   div.magnet-tile
