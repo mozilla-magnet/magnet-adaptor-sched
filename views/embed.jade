@@ -4,60 +4,12 @@ block content
   script.
     document.addEventListener('DOMContentLoaded', function() {
       var events=!{JSON.stringify(events)};
-      var event = events.find(function(s) {
-        var x1 = new Date(s.date);
-        var x2 = new Date();
-        var diff = x2 - x1;
-        if (diff <= 0) {
-          return s;
-        } else if (diff / 1000 / 60 / 60 / 24 < 1) {
-          // within same day
-          return true;
-        }
-        return false;
-      });
-      if (event) {
-        console.log('We have a event pending');
-        console.log(event);
-        var sessions = event.sessions;
-        document.querySelector('.magnet-tile-subtitle').textContent += ' ' + formatTime(event.date);
-        var now = Date.now();
-        var index = sessions.findIndex(function(s) {
-          var d = new Date(s.time);
-          return (d - now) >= 0;
-        });
-        // Adjust the index
-        if (index !== -1) {
-          if (index !== 0) {
-            // Get the previous session.
-            index--;
-          }
-        } else {
-          // Check first element just in case is in the future.
-          if (events.length > 0) {
-            var e = events[0];
-            if ((e - now) >= 0) {
-              index = 0;
-            }
-          }
-        }
 
-        if (index == -1) {
-          // All sessions passed
-          console.log('All sessions passed');
-          generateNoSessions();
-          return;
-        }
-
-        sessions = sessions.slice(index);
-        // Cut to a maximum of 5
-        sessions = sessions.slice(0, 5);
-        console.log('Final events to show ', sessions);
-        generateSessions(sessions);
-      } else {
-        // No sessions
-        console.log('No sessions');
+      if (!events || !events.sessions || events.sessions.length == 0) {
         generateNoSessions();
+      } else {
+        generateSessions(events.sessions);
+        document.querySelector('.magnet-tile-subtitle').textContent += ' ' + events.date;
       }
 
       function generateNoSessions() {
@@ -78,14 +30,6 @@ block content
           li.appendChild(a);
           list.appendChild(li);
         });
-      }
-
-      function formatTime(string) {
-        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        const components = string.split('-');
-        const month = months[parseInt(components[1], 10) -1];
-        const day = components[2];
-        return day + " " + month;
       }
     });
   div.magnet-tile
