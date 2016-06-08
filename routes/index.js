@@ -142,8 +142,10 @@ function transformData(data) {
       sessions = sessions.slice(0, 4);
       // Strip tz of dates on events and leve just time
       sessions.forEach(event => {
-        var date = new Date(event.time);
-        event.time = `${date.getHours()}:${date.getMinutes()}`;
+        const date = new Date(event.time);
+        const hours = ("0" + date.getHours()).slice(-2);
+        const minutes = ("0" + date.getMinutes()).slice(-2);
+        event.time = `${hours}:${minutes}`;
       });
       data.events = {
         date: showDate,
