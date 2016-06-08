@@ -31,6 +31,7 @@ router.get('/', (req, res) => {
 
   parser.parse()
     .then((data) => {
+      data = transformData(data);
       const transformed = encodeURIComponent(JSON.stringify(data));
       const oembed = `oembed?data=${transformed}`;
       const embed = `embed?data=${transformed}`;
@@ -85,6 +86,77 @@ function redirectNoSchedUrl(req, res) {
     path: req.originalUrl,
     protocol: req.secure ? 'https' : 'http'
   });
+}
+
+function formatTime(string) {
+  var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const components = string.split('-');
+  const month = months[parseInt(components[1], 10) -1];
+  const day = components[2];
+  return day + " " + month;
+}
+
+function transformData(data) {
+  // Parse data to send just the current/future events of the
+  // current day.
+  const events = data.events;
+  var event = events.find(function(s) {
+    var x1 = new Date(s.date);
+    var x2 = new Date();
+    var diff = x2 - x1;
+    if (diff <= 0) {
+      return s;
+    } else if (diff / 1000 / 60 / 60 / 24 < 1) {
+      // within same day
+      return true;
+    }
+    return false;
+  });
+  if (event) {
+    const sessions = event.sessions;
+    const showDate = formatTime(event.date);
+    var now = Date.now();
+    var index = sessions.findIndex(function(s) {
+      var d = new Date(s.time);
+      return (d - now) >= 0;
+    });
+    // Adjust the index
+    if (index !== -1) {
+      if (index !== 0) {
+        // Get the previous session.
+        index--;
+      }
+    } else {
+      // Check first element just in case is in the future.
+      if (events.length > 0) {
+        var e = events[0];
+        if ((e - now) >= 0) {
+          index = 0;
+        }
+      }
+    }
+
+    if (index != -1) {
+      sessions = sessions.slice(index);
+      // Cut to a maximum of 5
+      sessions = sessions.slice(0, 4);
+      // Strip tz of dates on events and leve just time
+      sessions.forEach(event => {
+        var date = new Date(event.time);
+        event.time = `${date.getHours()}:${date.getMinutes()}`;
+      });
+      data.events = {
+        date: showDate,
+        sessions
+      };
+    } else {
+      data.events = {};
+    }
+  } else {
+    data.events = {};
+  }
+
+  return data;
 }
 
 /**
