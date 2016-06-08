@@ -139,7 +139,12 @@ function transformData(data) {
     if (index != -1) {
       sessions = sessions.slice(index);
       // Cut to a maximum of 5
-      sessions = sessions.slice(0, 5);
+      sessions = sessions.slice(0, 4);
+      // Strip tz of dates on events and leve just time
+      sessions.forEach(event => {
+        var date = new Date(event.time);
+        event.time = `${date.getHours()}:${date.getMinutes()}`;
+      });
       data.events = {
         date: showDate,
         sessions

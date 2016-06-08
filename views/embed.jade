@@ -24,8 +24,7 @@ block content
         sessions.forEach(function(s) {
           var li = document.createElement('li');
           var a = document.createElement('a');
-          var date = new Date(s.time);
-          a.innerHTML = '<em>' + date.getHours() + ':' + date.getMinutes() + '</em>' + s.title;
+          a.innerHTML = '<em>' + s.time + '</em>' + s.title;
           a.href = s.link;
           li.appendChild(a);
           list.appendChild(li);
