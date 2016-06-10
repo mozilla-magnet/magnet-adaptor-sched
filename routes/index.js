@@ -58,8 +58,6 @@ router.get('/oembed', (req, res, next) => {
   var encoded = encodeURIComponent(data);
 
   res.json({
-    width: 300,
-    height: 300,
     html: `<iframe src="${BASE_URL}embed?data=${encoded}">`
   });
 });
